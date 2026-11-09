@@ -15,6 +15,15 @@ public static class FacadeClipping
     public static bool ContainsFootprint(Polygon2 outer,IEnumerable<Polygon2> holes,Rect2 panel)
     {
         if(!panel.IsValid) return false; var corners=new[]{new Point2(panel.X,panel.Y),new Point2(panel.X+panel.Width,panel.Y),new Point2(panel.X+panel.Width,panel.Y+panel.Height),new Point2(panel.X,panel.Y+panel.Height)};
-        return corners.All(outer.Contains)&&!corners.Any(p=>(holes??Enumerable.Empty<Polygon2>()).Any(h=>h.Contains(p)));
+        var footprint=new Polygon2(corners); var allHoles=(holes??Enumerable.Empty<Polygon2>()).ToArray();
+        if(!corners.All(outer.Contains)||corners.Any(p=>allHoles.Any(h=>h.Contains(p)))) return false;
+        if(Intersects(footprint,outer) || allHoles.Any(h=>Intersects(footprint,h) || h.Points.Any(footprint.Contains))) return false;
+        return true;
+    }
+    public static bool Intersects(Polygon2 a,Polygon2 b) { for(var i=0;i<a.Points.Count;i++) for(var j=0;j<b.Points.Count;j++) if(SegmentsIntersect(a.Points[i],a.Points[(i+1)%a.Points.Count],b.Points[j],b.Points[(j+1)%b.Points.Count])) return true; return false; }
+    public static bool SegmentsIntersect(Point2 a,Point2 b,Point2 c,Point2 d)
+    {
+        static double Cross(Point2 p,Point2 q,Point2 r)=>(q.X-p.X)*(r.Y-p.Y)-(q.Y-p.Y)*(r.X-p.X); const double e=1e-9; var ab1=Cross(a,b,c);var ab2=Cross(a,b,d);var cd1=Cross(c,d,a);var cd2=Cross(c,d,b);
+        return Math.Min(ab1,ab2)<=e&&Math.Max(ab1,ab2)>=-e&&Math.Min(cd1,cd2)<=e&&Math.Max(cd1,cd2)>=-e;
     }
 }

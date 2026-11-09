@@ -12,4 +12,6 @@ public class GeometryTests
     [Fact] public void SpaceFrameCreatesMembers() => Assert.NotEmpty(StructuralGenerators.SpaceFrame(10, 1, 2));
     [Fact] public void MassCalculatesQuantities() => Assert.Equal(300d, new MassEstimate(100, 3, 3).Volume);
     [Fact] public void ClippingRejectsPanelCrossingHole() { var outer=new Polygon2(new[]{new Point2(0,0),new Point2(10,0),new Point2(10,10),new Point2(0,10)}); var hole=new Polygon2(new[]{new Point2(3,3),new Point2(7,3),new Point2(7,7),new Point2(3,7)}); Assert.False(FacadeClipping.ContainsFootprint(outer,new[]{hole},new Rect2(2,2,4,4))); }
+    [Fact] public void SegmentIntersectionDetectsCrossing() => Assert.True(FacadeClipping.SegmentsIntersect(new Point2(0,0),new Point2(4,4),new Point2(0,4),new Point2(4,0)));
+    [Fact] public void ClippingRejectsConcaveEscape() { var outer=new Polygon2(new[]{new Point2(0,0),new Point2(8,0),new Point2(8,8),new Point2(4,4),new Point2(0,8)}); Assert.False(FacadeClipping.ContainsFootprint(outer,Array.Empty<Polygon2>(),new Rect2(3,3,3,3))); }
 }
