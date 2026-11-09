@@ -9,4 +9,6 @@ public class GeometryTests
     [Theory] [InlineData(0)] [InlineData(-1)] public void PositiveValidatorRejectsNonPositiveValues(double value) => Assert.NotNull(GeometryValidation.ValidatePositive("Width", value));
     [Fact] public void FacadeParametersRejectNegativeSpacing() => Assert.NotEmpty(new AE.Revit.Core.FacadeParameters { HorizontalSpacingMillimetres = -1 }.Validate());
     [Fact] public void LayoutRespectsBoundaryOffset() => Assert.Single(PanelLayoutGenerator.Generate(new PanelLayoutRequest { Boundary = new Rect2(0, 0, 12, 12), PanelWidth = 10, PanelHeight = 10, BoundaryOffset = 1 }));
+    [Fact] public void SpaceFrameCreatesMembers() => Assert.NotEmpty(StructuralGenerators.SpaceFrame(10, 1, 2));
+    [Fact] public void MassCalculatesQuantities() => Assert.Equal(300d, new MassEstimate(100, 3, 3).Volume);
 }

@@ -13,4 +13,5 @@ public class RoomAndDocumentationTests
     }
     [Fact] public void SheetValidationRejectsExistingNumber() => Assert.Contains(new SheetPlanValidator().Validate(new[] { new SheetRequest("A-101", "Plan", "tb") }, new[] { "A-101" }), issue => issue.Code == "sheet.number.duplicate");
     [Fact] public void FinishValidationRequiresPositiveThickness() => Assert.Contains(FinishValidator.Validate(new FinishRequest("room", "finish", 0)), issue => issue.Code == "finish.thickness");
+    [Fact] public void OfflineParserUsesAllowlistedIntent() => Assert.Equal("room.audit", new OfflineIntentParser().Parse(new AutomationRequest("run room audit"))!.CommandId);
 }
