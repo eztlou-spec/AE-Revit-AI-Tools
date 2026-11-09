@@ -8,4 +8,5 @@ public class GeometryTests
     [Fact] public void SegmentCalculatesLength() => Assert.Equal(5d, new Segment3(new Point3(0, 0, 0), new Point3(3, 4, 0)).Length, 8);
     [Theory] [InlineData(0)] [InlineData(-1)] public void PositiveValidatorRejectsNonPositiveValues(double value) => Assert.NotNull(GeometryValidation.ValidatePositive("Width", value));
     [Fact] public void FacadeParametersRejectNegativeSpacing() => Assert.NotEmpty(new AE.Revit.Core.FacadeParameters { HorizontalSpacingMillimetres = -1 }.Validate());
+    [Fact] public void LayoutRespectsBoundaryOffset() => Assert.Single(PanelLayoutGenerator.Generate(new PanelLayoutRequest { Boundary = new Rect2(0, 0, 12, 12), PanelWidth = 10, PanelHeight = 10, BoundaryOffset = 1 }));
 }
