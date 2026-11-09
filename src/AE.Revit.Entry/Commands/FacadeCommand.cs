@@ -45,7 +45,7 @@ public sealed class FacadeCommand : CommandBase
         group.Assimilate(); return Result.Succeeded;
     }
 
-    private static List<GeometryObject> CreatePanels(PlanarFace face, BoundingBoxUV bounds, double width, double height, double horizontalSpacing, double verticalSpacing, double thickness, Polygon2 outer, IReadOnlyList<Polygon2> holes, ElementId materialId)
+    internal static List<GeometryObject> CreatePanels(PlanarFace face, BoundingBoxUV bounds, double width, double height, double horizontalSpacing, double verticalSpacing, double thickness, Polygon2 outer, IReadOnlyList<Polygon2> holes, ElementId materialId)
     {
         var solids = new List<GeometryObject>();
         for (var u = bounds.Min.U; u + width <= bounds.Max.U + 1e-9; u += width + horizontalSpacing)
