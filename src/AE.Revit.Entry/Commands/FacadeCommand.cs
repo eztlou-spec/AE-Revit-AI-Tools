@@ -27,6 +27,7 @@ public sealed class FacadeCommand : CommandBase
         var bounds = face.GetBoundingBox();
         if (bounds.Max.U - bounds.Min.U < panelWidth || bounds.Max.V - bounds.Min.V < panelHeight) { message = "The host face is smaller than one panel."; return Result.Cancelled; }
         if (!Confirm("Regenerate facade panels on the selected host face? Existing AE panels for this host will be replaced.")) return Result.Cancelled;
+        var configurationId = Guid.NewGuid().ToString("N");
         using var group = new TransactionGroup(document, "AE Rectangular Facade"); group.Start();
         using (var transaction = new Transaction(document, "Generate facade panels"))
         {
@@ -38,7 +39,7 @@ public sealed class FacadeCommand : CommandBase
             var solids = CreatePanels(face, usable, panelWidth, panelHeight, hSpacing, vSpacing, thickness, outer, holes, materialId);
             if (solids.Count == 0) { transaction.RollBack(); message = "No panels fit inside the host-face bounding box."; return Result.Cancelled; }
             var shape = DirectShape.CreateElement(document, new ElementId(BuiltInCategory.OST_GenericModel));
-            shape.ApplicationId = ApplicationId; shape.ApplicationDataId = host.UniqueId; shape.SetShape(solids);
+            shape.ApplicationId = ApplicationId; shape.ApplicationDataId = host.UniqueId; shape.SetShape(solids); FacadeStorage.Write(shape, new FacadeMetadata(host.UniqueId, configurationId));
             transaction.Commit(); message = $"Generated {solids.Count} facade panels.";
         }
         group.Assimilate(); return Result.Succeeded;
