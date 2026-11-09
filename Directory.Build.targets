@@ -1,0 +1,6 @@
+<Project>
+  <Target Name="RequireLicensedRevitApi" BeforeTargets="ResolveReferences" Condition="'$(MSBuildProjectName)' == 'AE.Revit.Entry' and '$(DesignTimeBuild)' != 'true'">
+    <Error Condition="'$(RevitApiPath)' == ''" Text="AE.Revit.Entry requires licensed Autodesk Revit API assemblies. Pass /p:RevitApiPath=&lt;installed Revit folder&gt;; CI intentionally builds only the Revit-independent projects." />
+    <Error Condition="!Exists('$(RevitApiPath)\RevitAPI.dll') Or !Exists('$(RevitApiPath)\RevitAPIUI.dll')" Text="RevitApiPath must contain RevitAPI.dll and RevitAPIUI.dll from a licensed Autodesk Revit installation." />
+  </Target>
+</Project>
