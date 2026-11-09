@@ -4,6 +4,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using AE.Revit.Geometry;
 
 namespace AE.Revit.Entry.Commands;
 
@@ -31,7 +32,8 @@ public sealed class FacadeCommand : CommandBase
             var previous = new FilteredElementCollector(document).OfClass(typeof(DirectShape)).Cast<DirectShape>().Where(shape => shape.ApplicationId == ApplicationId && shape.ApplicationDataId == host.UniqueId).Select(shape => shape.Id).ToList();
             if (previous.Count > 0) document.Delete(previous);
             var usable = new BoundingBoxUV(new UV(bounds.Min.U + offset, bounds.Min.V + offset), new UV(bounds.Max.U - offset, bounds.Max.V - offset)); if (usable.Max.U <= usable.Min.U || usable.Max.V <= usable.Min.V) { transaction.RollBack(); message="Boundary offset leaves no usable host face."; return Result.Cancelled; }
-            var solids = CreatePanels(face, usable, panelWidth, panelHeight, hSpacing, vSpacing, thickness);
+            var loops = RevitFaceBoundaryAdapter.Extract(face); var outer = loops.OrderByDescending(l => l.Points.Count).First(); var holes = loops.Where(l => !ReferenceEquals(l, outer)).ToArray();
+            var solids = CreatePanels(face, usable, panelWidth, panelHeight, hSpacing, vSpacing, thickness, outer, holes);
             if (solids.Count == 0) { transaction.RollBack(); message = "No panels fit inside the host-face bounding box."; return Result.Cancelled; }
             var shape = DirectShape.CreateElement(document, new ElementId(BuiltInCategory.OST_GenericModel));
             shape.ApplicationId = ApplicationId; shape.ApplicationDataId = host.UniqueId; shape.SetShape(solids);
@@ -40,12 +42,13 @@ public sealed class FacadeCommand : CommandBase
         group.Assimilate(); return Result.Succeeded;
     }
 
-    private static List<GeometryObject> CreatePanels(PlanarFace face, BoundingBoxUV bounds, double width, double height, double horizontalSpacing, double verticalSpacing, double thickness)
+    private static List<GeometryObject> CreatePanels(PlanarFace face, BoundingBoxUV bounds, double width, double height, double horizontalSpacing, double verticalSpacing, double thickness, Polygon2 outer, IReadOnlyList<Polygon2> holes)
     {
         var solids = new List<GeometryObject>();
         for (var u = bounds.Min.U; u + width <= bounds.Max.U + 1e-9; u += width + horizontalSpacing)
         for (var v = bounds.Min.V; v + height <= bounds.Max.V + 1e-9; v += height + verticalSpacing)
         {
+            if (!FacadeClipping.ContainsFootprint(outer, holes, new Rect2(u, v, width, height))) continue;
             var p0 = face.Evaluate(new UV(u, v)); var p1 = face.Evaluate(new UV(u + width, v)); var p2 = face.Evaluate(new UV(u + width, v + height)); var p3 = face.Evaluate(new UV(u, v + height));
             var loop = new CurveLoop(); loop.Append(Line.CreateBound(p0, p1)); loop.Append(Line.CreateBound(p1, p2)); loop.Append(Line.CreateBound(p2, p3)); loop.Append(Line.CreateBound(p3, p0));
             solids.Add(GeometryCreationUtilities.CreateExtrusionGeometry(new List<CurveLoop> { loop }, face.FaceNormal, thickness));
