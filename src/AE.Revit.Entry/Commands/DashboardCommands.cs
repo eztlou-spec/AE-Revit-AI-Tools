@@ -1,4 +1,3 @@
-using System.Windows;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
@@ -7,7 +6,7 @@ public sealed class DashboardCommand : CommandBase
 {
     protected override Result Execute(UIApplication application, Document document, ref string message)
     {
-        var window = new Window { Title = "AE Revit AI Tools", Width = 420, Height = 230, WindowStartupLocation = WindowStartupLocation.CenterScreen, Content = new System.Windows.Controls.TextBlock { Margin = new Thickness(24), TextWrapping = TextWrapping.Wrap, Text = "AE Revit AI Tools Dashboard\n\nUse the Ribbon commands to run Room Audit, Smart Dimension, Auto Sheets, Auto Tag, Floor Finish, and Rectangular Facade. Revit operations run through ExternalEvent on Revit's API thread." } };
+        var window = new UI.DashboardWindow { WindowStartupLocation = WindowStartupLocation.CenterScreen };
         window.Show(); message = "Dashboard opened."; return Result.Succeeded;
     }
 }
