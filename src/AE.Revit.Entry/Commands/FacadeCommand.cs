@@ -20,7 +20,7 @@ public sealed class FacadeCommand : CommandBase
         var host = document.GetElement(reference);
         var face = host?.GetGeometryObjectFromReference(reference) as PlanarFace;
         if (host is null || face is null) { message = "Select a planar face."; return Result.Cancelled; }
-        var dialog = new UI.FacadeParameterDialog(); if (dialog.ShowDialog() != true || dialog.Parameters is null) return Result.Cancelled;
+        var dialog = new UI.FacadeParameterDialog(document); if (dialog.ShowDialog() != true || dialog.Parameters is null) return Result.Cancelled;
         var panelWidth = UnitUtils.ConvertToInternalUnits(dialog.Parameters.PanelWidthMillimetres, UnitTypeId.Millimeters); var panelHeight = UnitUtils.ConvertToInternalUnits(dialog.Parameters.PanelHeightMillimetres, UnitTypeId.Millimeters); var hSpacing = UnitUtils.ConvertToInternalUnits(dialog.Parameters.HorizontalSpacingMillimetres, UnitTypeId.Millimeters); var vSpacing = UnitUtils.ConvertToInternalUnits(dialog.Parameters.VerticalSpacingMillimetres, UnitTypeId.Millimeters); var thickness = UnitUtils.ConvertToInternalUnits(dialog.Parameters.DepthMillimetres, UnitTypeId.Millimeters); var offset=UnitUtils.ConvertToInternalUnits(dialog.Parameters.BoundaryOffsetMillimetres, UnitTypeId.Millimeters);
         var bounds = face.GetBoundingBox();
         if (bounds.Max.U - bounds.Min.U < panelWidth || bounds.Max.V - bounds.Min.V < panelHeight) { message = "The host face is smaller than one panel."; return Result.Cancelled; }
