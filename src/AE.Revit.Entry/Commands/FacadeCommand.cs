@@ -19,7 +19,8 @@ public sealed class FacadeCommand : CommandBase
         var host = document.GetElement(reference);
         var face = host?.GetGeometryObjectFromReference(reference) as PlanarFace;
         if (host is null || face is null) { message = "Select a planar face."; return Result.Cancelled; }
-        const double panelWidth = 4.0, panelHeight = 4.0, spacing = 0.5, thickness = 2.0 / 12.0;
+        var dialog = new UI.FacadeParameterDialog(); if (dialog.ShowDialog() != true || dialog.Parameters is null) return Result.Cancelled;
+        var panelWidth = UnitUtils.ConvertToInternalUnits(dialog.Parameters.PanelWidthMillimetres, UnitTypeId.Millimeters); var panelHeight = UnitUtils.ConvertToInternalUnits(dialog.Parameters.PanelHeightMillimetres, UnitTypeId.Millimeters); var spacing = UnitUtils.ConvertToInternalUnits(dialog.Parameters.HorizontalSpacingMillimetres, UnitTypeId.Millimeters); var thickness = UnitUtils.ConvertToInternalUnits(dialog.Parameters.DepthMillimetres, UnitTypeId.Millimeters);
         var bounds = face.GetBoundingBox();
         if (bounds.Max.U - bounds.Min.U < panelWidth || bounds.Max.V - bounds.Min.V < panelHeight) { message = "The host face is smaller than one panel."; return Result.Cancelled; }
         if (!Confirm("Regenerate facade panels on the selected host face? Existing AE panels for this host will be replaced.")) return Result.Cancelled;
