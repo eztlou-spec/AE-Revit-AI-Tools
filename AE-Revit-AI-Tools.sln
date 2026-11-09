@@ -1,0 +1,42 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AE.Revit.Core", "src\AE.Revit.Core\AE.Revit.Core.csproj", "{DA9B555A-D5CC-440F-9691-B692440873DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AE.Revit.Geometry", "src\AE.Revit.Geometry\AE.Revit.Geometry.csproj", "{9E251D41-E617-43B5-AEED-4A0DEAEFFBC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AE.Revit.API", "src\AE.Revit.API\AE.Revit.API.csproj", "{FBAFCA48-7B09-4E87-B2BB-1A9D5877DC64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AE.Revit.Entry", "src\AE.Revit.Entry\AE.Revit.Entry.csproj", "{00E6C054-58D5-4DCF-A976-18B244DDB3E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{03A50566-5DFF-4A4C-B445-36328E894848}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA9B555A-D5CC-440F-9691-B692440873DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA9B555A-D5CC-440F-9691-B692440873DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA9B555A-D5CC-440F-9691-B692440873DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA9B555A-D5CC-440F-9691-B692440873DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E251D41-E617-43B5-AEED-4A0DEAEFFBC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E251D41-E617-43B5-AEED-4A0DEAEFFBC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E251D41-E617-43B5-AEED-4A0DEAEFFBC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E251D41-E617-43B5-AEED-4A0DEAEFFBC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBAFCA48-7B09-4E87-B2BB-1A9D5877DC64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBAFCA48-7B09-4E87-B2BB-1A9D5877DC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBAFCA48-7B09-4E87-B2BB-1A9D5877DC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBAFCA48-7B09-4E87-B2BB-1A9D5877DC64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00E6C054-58D5-4DCF-A976-18B244DDB3E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00E6C054-58D5-4DCF-A976-18B244DDB3E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00E6C054-58D5-4DCF-A976-18B244DDB3E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00E6C054-58D5-4DCF-A976-18B244DDB3E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A50566-5DFF-4A4C-B445-36328E894848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03A50566-5DFF-4A4C-B445-36328E894848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03A50566-5DFF-4A4C-B445-36328E894848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03A50566-5DFF-4A4C-B445-36328E894848}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

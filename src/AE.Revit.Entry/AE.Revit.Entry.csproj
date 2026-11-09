@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <AssemblyName>AE.Revit.Entry</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../AE.Revit.Core/AE.Revit.Core.csproj" />
+    <ProjectReference Include="../AE.Revit.API/AE.Revit.API.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(RevitApiPath)' != ''">
+    <Reference Include="RevitAPI"><HintPath>$(RevitApiPath)\RevitAPI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="RevitAPIUI"><HintPath>$(RevitApiPath)\RevitAPIUI.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

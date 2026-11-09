@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>AE Revit AI Tools</Name>
+    <Assembly>{{ASSEMBLY_PATH}}</Assembly>
+    <AddInId>9E77F72B-27C4-4FEF-B650-6D9673FA6CF0</AddInId>
+    <FullClassName>AE.Revit.Entry.Application</FullClassName>
+    <VendorId>AETL</VendorId>
+    <VendorDescription>Ahmed Eztlou</VendorDescription>
+  </AddIn>
+</RevitAddIns>
