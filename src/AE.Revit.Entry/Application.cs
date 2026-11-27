@@ -14,6 +14,7 @@ public sealed class Application : IExternalApplication
             AddPanel(application, "Documentation", ("Room Audit", typeof(Commands.RoomAuditCommand)), ("Smart Dimension", typeof(Commands.SmartDimensionCommand)), ("Auto Sheets", typeof(Commands.AutoSheetsCommand)), ("Auto Tag", typeof(Commands.AutoTagCommand)));
             AddPanel(application, "Finishing", ("Floor Finish", typeof(Commands.FloorFinishCommand)));
             AddPanel(application, "Parametric", ("Rectangular Facade", typeof(Commands.FacadeCommand)));
+            AddPanel(application, "Advanced Structures", ("Smart Dome", typeof(Commands.SmartDomeCommand)));
             ExternalEventDispatcher.Initialize();
             return Result.Succeeded;
         }
