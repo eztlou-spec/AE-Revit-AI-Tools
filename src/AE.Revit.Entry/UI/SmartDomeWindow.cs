@@ -46,10 +46,10 @@ internal sealed class SmartDomeWindow : Window
         types.ItemsSource=Enum.GetValues(typeof(ProDomeType));types.SelectedItem=d.Settings.Type;Add(fields,"Dome type",types);
         Add(fields,"Diameter (m)",diameter,d.Settings.Diameter);Add(fields,"Height (m)",height,d.Settings.Height);
         Add(fields,"Segments",segments,d.Settings.Segments);Add(fields,"Rings / subdivision",rings,d.Settings.Rings);
-        Add(fields,"Static oculus (%)",opening,d.Settings.Opening*100);Add(fields,"Layer depth (m)",depth,d.Settings.LayerDepth);
+        Add(fields,"Oculus / petal opening (%)",opening,d.Settings.Opening*100);Add(fields,"Layer depth (m)",depth,d.Settings.LayerDepth);
         Add(fields,"Freeform Y aspect",aspect,d.Settings.Aspect);Add(fields,"Square member (mm)",section,d.SectionMm);
         var right=new StackPanel();root.Children.Add(right);right.Children.Add(new TextBlock{Text="Concept geometry • isometric preview",FontSize=16,Margin=new Thickness(0,0,0,12)});right.Children.Add(preview);right.Children.Add(status);
-        right.Children.Add(new TextBlock { Text="Iris Concept is a static spiral approximation, not a working linkage. Geodesic and Kiewitt require a closed crown.",TextWrapping=TextWrapping.Wrap });
+        right.Children.Add(new TextBlock { Text="Iris Concept is static. Petal Motion rotates independent rigid petals (0–100% = 0–90°); no collision check. Other types use a static oculus. Geodesic and Kiewitt require a closed crown.",TextWrapping=TextWrapping.Wrap });
         types.SelectionChanged+=(o,e)=>Refresh();foreach(var t in new[]{diameter,height,segments,rings,opening,depth,aspect,section})t.TextChanged+=(o,e)=>Refresh();
         ok.Click+=(o,e)=>{if(Refresh())DialogResult=true;};Refresh();
     }
