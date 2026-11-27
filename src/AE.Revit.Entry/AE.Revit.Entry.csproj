@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="../AE.Revit.Core/AE.Revit.Core.csproj" />
     <ProjectReference Include="../AE.Revit.API/AE.Revit.API.csproj" />
+    <ProjectReference Include="../AE.Revit.Geometry/AE.Revit.Geometry.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(RevitApiPath)' != ''">
     <Reference Include="RevitAPI"><HintPath>$(RevitApiPath)\RevitAPI.dll</HintPath><Private>false</Private></Reference>

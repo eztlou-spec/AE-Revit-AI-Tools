@@ -43,7 +43,8 @@ public sealed class CommandRegistry
     public void Register<TRequest>(IRevitCommand<TRequest> command)
     {
         if (command is null) throw new ArgumentNullException(nameof(command));
-        if (!_commands.TryAdd(command.Id, command)) throw new InvalidOperationException($"Command '{command.Id}' is already registered.");
+        if (_commands.ContainsKey(command.Id)) throw new InvalidOperationException($"Command '{command.Id}' is already registered.");
+        _commands.Add(command.Id, command);
     }
     public bool Contains(string id) => _commands.ContainsKey(id);
     public IReadOnlyCollection<string> Ids => _commands.Keys.OrderBy(x => x).ToArray();

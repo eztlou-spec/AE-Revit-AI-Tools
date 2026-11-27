@@ -11,6 +11,7 @@ if (-not (Test-Path (Join-Path $RevitApiPath 'RevitAPI.dll')) -or -not (Test-Pat
 
 $framework = if ([int]$RevitVersion -le 2024) { 'net48' } else { 'net8.0-windows' }
 dotnet build (Join-Path $PSScriptRoot '..\src\AE.Revit.Entry\AE.Revit.Entry.csproj') --configuration $Configuration --framework $framework "/p:RevitApiPath=$RevitApiPath"
+if ($LASTEXITCODE -ne 0) { throw "Revit build failed ($LASTEXITCODE)." }
 $output = Join-Path $PSScriptRoot "..\src\AE.Revit.Entry\bin\$Configuration\$framework"
 if (-not (Test-Path (Join-Path $output 'AE.Revit.Entry.dll'))) { throw "Expected entry assembly was not produced: $output" }
 $release = Join-Path $PSScriptRoot "..\artifacts\Revit$RevitVersion"
